@@ -45,3 +45,53 @@ try {
   }
   await page.pause();
 });
+
+test('Cart Validation', async ({ page }) => {
+  const martPage = new navtomart(page);
+  await martPage.navigate();
+  const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");
+
+try {
+  const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");
+  await popupClose.waitFor({ state: 'visible', timeout: 5000 });
+  await popupClose.click();
+  console.log('Popup closed');
+} catch (e) {
+  console.log('Popup did not appear so continuing');
+}
+
+  await page.goto('https://mart.hamropatro.com/');
+  const productXPath = '/html[1]/body[1]/div[1]/main[1]/div[1]/div[3]/main[1]/div[1]/div[8]/div[1]/div[2]/div[1]/div[1]/div[4]/a[1]/div[2]/h1[1]';
+  const productElement = await page.locator(`xpath=${productXPath}`);
+  const productNameHome = await productElement.textContent();
+  const productPriceHome = await page.locator(`xpath=html[1]/body[1]/div[1]/main[1]/div[1]/div[3]/main[1]/div[1]/div[8]/div[1]/div[2]/div[1]/div[1]/div[4]/a[1]/div[2]/div[1]/div[1]/h2[1]`).textContent();
+  console.log('Product price Before clicking is:', productPriceHome);
+  console.log('Product Name before clicking is:', productNameHome);
+  await productElement.click();
+  console.log('clicked');
+  const buyNowButton = page.locator('text=Buy Now');
+  await buyNowButton.waitFor({ state: 'visible', timeout: 5000 });
+  if (await buyNowButton.isVisible()) {
+    console.log('Buy Now button is visible');
+    page.locator('text=Buy Now').click();
+    console.log('Buy Now button clicked');
+    page.locator("xpath=//p[@class='coupon-count svelte-195rrdk']").click();
+    console.log('Clicked cart');
+    const cartpageitem = await page.locator("xpath=//div[contains(@class,'text-sm sm:text-base')]").first().textContent();
+    const cartitemprice = await page.locator("xpath=//p[contains(@class,'text-primary font-GilroyBold')]").first().textContent();
+    if (cartpageitem?.trim() === productNameHome?.trim() && cartitemprice?.trim() === productPriceHome?.trim()) {
+  console.log('Product name and price in cart match the original values.');
+  console.log('Name:', cartpageitem, 'and the Price:', cartitemprice);
+} else {
+  console.log('Product in cart does not match.');
+  console.log('Expected Name:', productNameHome, ' But Found:', cartpageitem);
+  console.log('Expected Price:', productPriceHome, ' But Found:', cartitemprice);
+}
+
+  } else {
+    console.log('Buy Now button not found. Redirecting to home...');
+    await page.goto('https://mart.hamropatro.com/');
+    console.log('Product not found');
+  }
+  await page.pause();
+});
