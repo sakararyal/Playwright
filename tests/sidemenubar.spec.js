@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../page/home';
 testgit('Hamro_pay', async ({ page }) => {
