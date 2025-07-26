@@ -1,0 +1,3 @@
+npx playright codegennpx playwright test ./tests/your-test-file.spec.ts --headed -g "test name"
+run indivisual test case:
+npx playwright test ./tests/your-test-file.spec.ts --headed -g "test name"
