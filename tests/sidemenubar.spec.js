@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../page/home';
-testgit('Hamro_pay', async ({ page }) => {
+test('Hamro_pay', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
   await page.getByRole('button', { name: 'हाम्रो पे' }).first().click();
