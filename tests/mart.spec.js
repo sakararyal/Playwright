@@ -46,7 +46,7 @@ try {
   await page.pause();
 });
 
-test.only('Cart Validation', async ({ page }) => {
+test('Cart Validation', async ({ page }) => {
   const martPage = new navtomart(page);
   await martPage.navigate();
   const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");
