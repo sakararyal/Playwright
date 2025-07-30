@@ -1,7 +1,7 @@
 const { test,expect } = require('@playwright/test');
-const {navtomart} = require('../page/navtomart');
-const { GoogleAuthPage } = require('../page/googleauth');
-const { navtomartuat } = require('../page/martuat');
+const {navtomart} = require('../../page/navtomart');
+const { GoogleAuthPage } = require('../../page/googleauth');
+const { navtomartuat } = require('../../page/martuat');
 
 test('Product Validation', async ({ page }) => {
   const martPage = new navtomart(page);
@@ -229,7 +229,7 @@ test('shipping cost validation', async ({ page }) => {
 });
 });
 
-test('Guest Cart Validation After Clearing Cache', async ({ page, browser }) => {
+test.only('Guest Cart Validation After Clearing Cache', async ({ page, browser }) => {
   // Step 1: Navigate
   await page.goto('https://mart.hamropatro.com/');
   await page.waitForLoadState('domcontentloaded');
