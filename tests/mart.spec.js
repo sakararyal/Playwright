@@ -1,8 +1,6 @@
 const { test,expect } = require('@playwright/test');
 const {navtomart} = require('../page/navtomart');
 const { GoogleAuthPage } = require('../page/googleauth');
-const { constants } = require('buffer');
-
 
 test('Product Validation', async ({ page }) => {
   const martPage = new navtomart(page);
@@ -43,8 +41,7 @@ try {
     await page.goto('https://mart.hamropatro.com/');
     console.log('Product not found');
   }
-  await page.pause();
-});
+  });
 test.describe('Cart and Quantity Validation', () => {
   let productNameHome;
   let productPriceHome;
@@ -121,8 +118,7 @@ test.describe('Cart and Quantity Validation', () => {
       console.log('Expected Price:', productPriceHome, ' But Found:', cartitemprice);
     }
 
-    await page.pause(); // Optional for debugging
-  });
+     });
 
 test('Quantity Validation', async ({ page }) => {
   await goToProductAndClickBuyNow(page);
@@ -179,7 +175,56 @@ test('Quantity Validation', async ({ page }) => {
     throw error;
     }
 
-  await page.pause();
+  
 });
+test('shipping cost validation', async ({ page }) => {
+  await goToProductAndClickBuyNow(page);
+  await page.locator("xpath=//p[@class='coupon-count svelte-195rrdk']").click();
+  const plusButtonXPath = "xpath=(//button[contains(@class,'rounded-full px-2')])[2]";
+  const totalPriceXPath = "xpath=//p[contains(@class,'text-xl font-GilroyBold')]";
+  // Define the XPath for the shipping information text (to be extracted if shipping is free).
+    const shippingInfoXPath = "xpath=(//p[@class='font-GilroyMedium'])[2]";
+    async function getCurrentTotalPriceNumber() {
+    const TotalpriceText = await page.locator(totalPriceXPath).first().textContent();
+    const match = TotalpriceText.match(/(\d+(\.\d+)?)/);
+    const TotalpriceNumber = match ? parseFloat(match[0]) : 0;
+    console.log(`Extracted total price: ${TotalpriceText}, parsed as number: ${TotalpriceNumber}`);
+    return TotalpriceNumber;
+  }
 
+  let TotalpriceNumber = await getCurrentTotalPriceNumber();
+  console.log('Initial total price (parsed):', TotalpriceNumber);
+
+  const FREE_SHIPPING_THRESHOLD = 1000;
+
+  const MAX_CLICKS = 10;
+  let clickCount = 0;
+
+  console.log(`Checking if total price is <= ${FREE_SHIPPING_THRESHOLD} for free shipping...`);
+
+  while (TotalpriceNumber <= FREE_SHIPPING_THRESHOLD && clickCount < MAX_CLICKS) {
+    console.log(`Current total price (${TotalpriceNumber}) is <= ${FREE_SHIPPING_THRESHOLD}. Clicking plus button...`);
+    await page.locator(plusButtonXPath).click();
+    await page.waitForTimeout(1000);
+    TotalpriceNumber = await getCurrentTotalPriceNumber(); 
+        console.log(`Total price after click ${clickCount + 1}:`, TotalpriceNumber);
+    clickCount++;
+  }
+
+ 
+  if (TotalpriceNumber >= FREE_SHIPPING_THRESHOLD) {
+    console.log(`Final total price (${TotalpriceNumber}) is <= ${FREE_SHIPPING_THRESHOLD}. Shipping price is FREE.`);
+    try {
+      const freeShippingInfoText = await page.locator(shippingInfoXPath).textContent();
+      console.log(`Extracted text for free shipping: "${freeShippingInfoText}"`);
+        } catch (error) {
+      console.error(`Could not extract shipping info text from "${shippingInfoXPath}":`, error);
+    }
+  } else {
+    console.log(`Final total price (${TotalpriceNumber}) is > ${FREE_SHIPPING_THRESHOLD}. It will cost shipping charge.`);
+
+  }
+
+
+});
 });

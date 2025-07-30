@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { test } = require('@playwright/test');
 const { HomePage } = require('../page/home');
 const { GoogleAuthPage } = require('../page/googleauth');

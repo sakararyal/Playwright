@@ -9,6 +9,4 @@ test('User can log in via Google', async ({ page }) => {
   const credentials = await readCredentialsFromCSV(csvFilePath);
   const { email, password } = credentials[0];
   await performGoogleLogin(page, email, password);
-  await page.pause();
-  
 });
