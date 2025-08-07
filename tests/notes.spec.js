@@ -1,6 +1,4 @@
 const { test } = require('@playwright/test');
-const { HomePage } = require('../page/home');
-const { GoogleAuthPage } = require('../page/googleauth');
 const { readCredentialsFromCSV, performGoogleLogin } = require('../helpers/loginhelper');
 
 test('User can log in and create a note', async ({ page }) => {

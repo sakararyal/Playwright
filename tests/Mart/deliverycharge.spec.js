@@ -5,7 +5,6 @@ test('Checkout Validation',async ({page})=>{
   await martPage.navigate();
   await page.getByRole('link', { name: 'Gaunghar Organics Buckwheat' }).click();
   await page.getByRole('button', { name: 'Buy now' }).click();
-  await page.pause();
   await page.locator("//p[@class='coupon-count svelte-195rrdk']").click();
   await page.getByRole('button', { name: 'Checkout' }).click();
   await page.getByRole('button', { name: 'Continue as Guest' }).click();
@@ -43,4 +42,5 @@ test('Checkout Validation',async ({page})=>{
   }else{
     console.log('Toast Message:', toastText);
   }
+  
   })

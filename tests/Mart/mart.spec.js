@@ -1,14 +1,10 @@
 const { test,expect } = require('@playwright/test');
 const {navtomart} = require('../../page/navtomart');
-const { GoogleAuthPage } = require('../../page/googleauth');
-const { navtomartuat } = require('../../page/martuat');
 
 test('Product Validation', async ({ page }) => {
   const martPage = new navtomart(page);
   await martPage.navigate();
-  const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");
-
-try {
+  const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");try {
   const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");
   await popupClose.waitFor({ state: 'visible', timeout: 5000 });
   await popupClose.click();
@@ -53,7 +49,7 @@ test.describe('Cart and Quantity Validation', () => {
 
     const popupClose = page.locator("//img[@src='/images/svg/crossIcon.svg']");
     try {
-      await popupClose.waitFor({ state: 'visible', timeout: 5000 });
+      await popupClose.waitFor({ state: 'visible', timeout: 10000 });
       await popupClose.click();
       console.log('Popup closed');
     } catch (e) {
@@ -66,9 +62,7 @@ test.describe('Cart and Quantity Validation', () => {
   });
 
   async function goToProductAndClickBuyNow(page) {
-    await page.goto('https://mart.hamropatro.com/');
-
-    const productXPath = '/html[1]/body[1]/div[1]/main[1]/div[1]/div[3]/main[1]/div[1]/div[8]/div[1]/div[2]/div[1]/div[1]/div[4]/a[1]/div[2]/h1[1]';
+    const productXPath = 'html[1]/body[1]/div[1]/main[1]/div[1]/div[3]/main[1]/div[1]/div[9]/div[1]/div[2]/div[1]/div[1]/div[4]/a[1]/div[2]/h1[1]';
     const productElement = await page.locator(`xpath=${productXPath}`);
     productNameHome = await productElement.textContent();
     productPriceHome = await page
@@ -93,7 +87,6 @@ test.describe('Cart and Quantity Validation', () => {
       await page.goto('https://mart.hamropatro.com/');
     }
   }
-
   test('Cart Validation', async ({ page }) => {
     await goToProductAndClickBuyNow(page);
 
@@ -124,8 +117,7 @@ test.describe('Cart and Quantity Validation', () => {
 test('Quantity Validation', async ({ page }) => {
   await goToProductAndClickBuyNow(page);
   await page.locator("xpath=//p[@class='coupon-count svelte-195rrdk']").click();
-  console.log('Clicked cart from quantity validation test');
-  //xpath for quantity display
+   //xpath for quantity display
   const quantityDisplayXPath = "xpath=//p[contains(@class,'px-2.5 py-[1px]')]";
   //Xpath for minus button
   const minusButtonXPath = "xpath=(//button[contains(@class,'rounded-full px-2')])[1]";
@@ -228,8 +220,7 @@ test('shipping cost validation', async ({ page }) => {
 
 });
 });
-
-test.only('Guest Cart Validation After Clearing Cache', async ({ page, browser }) => {
+test('Guest Cart Validation After Clearing Cache', async ({ page, browser }) => {
   // Step 1: Navigate
   await page.goto('https://mart.hamropatro.com/');
   await page.waitForLoadState('domcontentloaded');
