@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HomePage } from '../page/home';
+import { HomePage } from '../../page/home';
 test('Hamro_pay', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();

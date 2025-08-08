@@ -1,5 +1,5 @@
 const { test } = require('@playwright/test');
-const { readCredentialsFromCSV, performGoogleLogin } = require('../helpers/loginhelper');
+const { readCredentialsFromCSV, performGoogleLogin } = require('../../helpers/loginhelper');
 
 test('User can log in and create a note', async ({ page }) => {
 const credentials = await readCredentialsFromCSV(require('path').resolve(__dirname, '../cred.csv'));
