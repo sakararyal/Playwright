@@ -1,8 +1,5 @@
-require('dotenv').config();
 const { test } = require('@playwright/test');
-const { HomePage } = require('../page/home');
-const { GoogleAuthPage } = require('../page/googleauth');
-const { readCredentialsFromCSV, performGoogleLogin } = require('../helpers/loginhelper');
+const { readCredentialsFromCSV, performGoogleLogin } = require('../../helpers/loginhelper');
 
 test('User can log in and create a note', async ({ page }) => {
 const credentials = await readCredentialsFromCSV(require('path').resolve(__dirname, '../cred.csv'));

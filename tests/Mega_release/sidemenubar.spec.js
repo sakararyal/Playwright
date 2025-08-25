@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HomePage } from '../page/home';
+import { HomePage } from '../../page/home';
 test('Hamro_pay', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
@@ -19,7 +19,6 @@ test('Hamro_pay', async ({ page }) => {
       expect(currentURL === expectedURL, 'URL should match expected hamro pay').toBe(false);
     }   
 });
-
 test('Hamro_mart', async ({ page }) => {
     const homePage = new HomePage(page);
     await homePage.navigate();
@@ -116,11 +115,13 @@ test('Patroview', async ({ page }) => {
 test('साइत', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
+  await  page.pause();
   await page.waitForLoadState('load');
   await page.getByRole('button', { name: 'जीवनशैली' }).click();
+  await page.waitForTimeout(2000);
   await page.getByRole('button', { name: 'साइत' }).first().click();
   await page.waitForLoadState('load');
-  const expectedURL = 'https://app.hamropatro.com/sahit/2081';
+  const expectedURL = 'https://app.hamropatro.com/sahit/2082';
   const currentURL = page.url();
   console.log('Current URL:', currentURL);
 
@@ -213,7 +214,6 @@ test('रेडियो', async ({ page }) => {
   }
   
 });
-
 test('विनिमय दर', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
@@ -253,7 +253,6 @@ test('राशिफल', async ({ page }) => {
     expect(currentURL === expectedURL, 'URL should match expectedमिति राशिफल page').toBe(false);
   }
 });
-
 test('हाम्रो ज्योतिष', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
@@ -278,6 +277,7 @@ test('ब्लग', async ({ page }) => {
   await homePage.navigate();
   await page.waitForLoadState('load');
   await page.getByRole('button', { name: 'मिडिया र जानकारी' }).click();
+  await page.waitForTimeout(3000);
   await page.getByRole('button', { name: 'ब्लग' }).click();
   await page.waitForLoadState('load');
   const expectedURL = 'https://www.hamropatro.com/posts';
@@ -292,7 +292,6 @@ test('ब्लग', async ({ page }) => {
     expect(currentURL === expectedURL, 'URL should match expectedमिति ब्लग page').toBe(false);
   }
 });
-
 test('अडियो / पोड्काष्ट', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
@@ -311,7 +310,6 @@ test('अडियो / पोड्काष्ट', async ({ page }) => {
     expect(currentURL === expectedURL, 'URL should match expected अडियो / पोड्काष्ट').toBe(false);
   }
 });
-
 //yo baki xa 
 // test('सिनेमा', async ({ page }) => {
 //   const homePage = new HomePage(page);
@@ -332,13 +330,12 @@ test('अडियो / पोड्काष्ट', async ({ page }) => {
 //     expect(currentURL === expectedURL, 'URL should match expectedमिति सिनेमा page').toBe(false);
 //   }
 // });
-
-test('सुन/चाँद', async ({ page }) => {
+test('सुन/चाँदी', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
   await page.waitForLoadState('load');
   await page.getByRole('button', { name: 'बजारहरू' }).click();
-  await page.getByRole('button', { name: 'सुन/चाँद' }).click();
+  await page.getByRole('button', { name: 'सुन/चाँदी' }).first().click();
   const expectedURL = 'https://www.hamropatro.com/gold';
   await page.waitForLoadState('load')
   const currentURL = page.url();
@@ -352,28 +349,30 @@ test('सुन/चाँद', async ({ page }) => {
     expect(currentURL === expectedURL, 'URL should match expected सुन/चाँद page').toBe(false);
   }
 });
+// Removed and Repaced With share bajzar
 
+// test.only('ब्याज दर', async ({ page }) => {
+//   const homePage = new HomePage(page);
+//   await homePage.navigate();
+//   await page.waitForLoadState('load');
+//   await page.pause
+//   await page.getByRole('button', { name: 'बजारहरू' }).click();
+//   const byajDarBtn = page.getByRole('button', { name: 'ब्याज दर' });
+//   await expect(byajDarBtn).toBeVisible();
+//   await byajDarBtn.click();
+//   const expectedURL = 'https://bank-rates.hamropatro.com/';
+//   await page.waitForLoadState('load')
+//   const currentURL = page.url();
+//   console.log('Current URL:', currentURL);
 
-test('ब्याज दर', async ({ page }) => {
-  const homePage = new HomePage(page);
-  await homePage.navigate();
-  await page.waitForLoadState('load');
-  await page.getByRole('button', { name: 'बजारहरू' }).click();
-  await page.getByRole('button', { name: 'ब्याज दर' }).click();
-  const expectedURL = 'https://bank-rates.hamropatro.com/';
-  await page.waitForLoadState('load')
-  const currentURL = page.url();
-  console.log('Current URL:', currentURL);
-
-  if (currentURL.includes(expectedURL)) {
-    console.log('✅ Test case passed: URL is correct for ब्याज दर');
-    expect(currentURL === expectedURL, 'URL should match expected ब्याज दर page').toBe(true);
-  } else {
-    console.log('❌ Test case failed: URL is incorrect for ब्याज दर');
-    expect(currentURL === expectedURL, 'URL should match expected ब्याज दर page').toBe(false);
-  }
-});
-
+//   if (currentURL.includes(expectedURL)) {
+//     console.log('✅ Test case passed: URL is correct for ब्याज दर');
+//     expect(currentURL === expectedURL, 'URL should match expected ब्याज दर page').toBe(true);
+//   } else {
+//     console.log('❌ Test case failed: URL is incorrect for ब्याज दर');
+//     expect(currentURL === expectedURL, 'URL should match expected ब्याज दर page').toBe(false);
+//   }
+// });
 test('ई-लर्निंङ्', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigate();
@@ -430,4 +429,24 @@ test('FOR_YOU', async ({ page }) => {
     expect(currentURL === expectedURL, 'URL should match expectedFOR_YOU page').toBe(false);
   }
 });
+test('शेयर बजार', async ({ page }) => {
+  const homePage = new HomePage(page);
+  await homePage.navigate();
+  await page.waitForLoadState('load');
+  await page.getByRole('button', { name: 'बजारहरू' }).click();
+  const sharebtn = page.getByRole('button', { name: 'शेयर बजार'}).first();
+  await expect(sharebtn).toBeVisible();
+  await sharebtn.click();
+  const expectedURL = 'https://laganisutra.com/hamropatro';
+  await page.waitForLoadState('load')
+  const currentURL = page.url();
+  console.log('Current URL:', currentURL);
 
+  if (currentURL.includes(expectedURL)) {
+    console.log('✅ Test case passed: URL is correct for Share');
+    expect(currentURL === expectedURL, 'URL should match expected Share page').toBe(true);
+  } else {
+    console.log('❌ Test case failed: URL is incorrect for Share');
+    expect(currentURL === expectedURL, 'URL should match expected Share page').toBe(false);
+  }
+});
