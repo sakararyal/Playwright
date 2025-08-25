@@ -42,7 +42,7 @@ test.afterEach(async () => {
   await page.close();
 });
 
-test.only('Sorting Validation (Price low to high)', async () => {
+test('Sorting Validation (Price low to high)', async () => {
   await page.getByRole('button', { name: 'Price Low' }).click();
   const apiUrlPart = '/category/-O0i5TdnanU5HjbMK2ar/items';
   await page.waitForResponse(response =>

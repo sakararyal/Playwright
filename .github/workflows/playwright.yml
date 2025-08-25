@@ -1,6 +1,8 @@
 name: Run Playwright Tests
 
 on:
+  schedule:
+    - cron: "41 4 25 8 *" 
   push:
     branches: [ mart ]  # Or any branch you want
   pull_request:
